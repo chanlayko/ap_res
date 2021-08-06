@@ -21,8 +21,16 @@ Route::get('/', function () {
 
 // Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\OrderController::class, 'index'])->name('home');
+Route::get('/', [App\Http\Controllers\OrderController::class, 'index'])->name('order.form');
+Route::post('order_submit', [App\Http\Controllers\OrderController::class, 'submit'])->name('order.submit');
+
 Route::resource('dish', App\Http\Controllers\DishesController::class);
+Route::get('order', [App\Http\Controllers\DishesController::class, 'order'])->name('kitchen.order');
+Route::get('order/{order}/approve', [App\Http\Controllers\DishesController::class, 'approve']);
+Route::get('order/{order}/cancel', [App\Http\Controllers\DishesController::class, 'cancel']);
+Route::get('order/{order}/ready', [App\Http\Controllers\DishesController::class, 'ready']);
+
+Route::get('order/{order}/serve', [App\Http\Controllers\OrderController::class, 'serve']);
 
 Auth::routes([
     'register' => false, // Registration Routes...
